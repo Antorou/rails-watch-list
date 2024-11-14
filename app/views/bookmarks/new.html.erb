@@ -1,0 +1,18 @@
+<h1>Add a Bookmark to <%= @list.name %></h1>
+
+<%= simple_form_for([@list, @bookmark]) do |f| %>
+
+  <div>
+    <%= f.input :movie_id, as: :select, collection: Movie.all, include_blank: "Select a Movie", label_method: :title, value_method: :id, label: "Movie" %>
+  </div>
+
+  <div>
+    <%= f.input :comment, as: :text, collection: Movie.all, include_blank: "Add a comment", label: "Comment" %>
+  </div>
+
+  <div>
+    <%= f.submit "Add Bookmark" %>
+  </div>
+<% end %>
+
+<%= link_to 'Back to List', list_path(@list) %> <!-- Link back to the list's show page -->

@@ -1,0 +1,12 @@
+<h1><%= @list.name %></h1>
+
+<h2>Bookmarks</h2>
+    <% @list.bookmarks.each do |bookmark| %>
+      <li>
+        <%= bookmark.movie.title %> <!-- Display the movie title associated with this bookmark -->
+        <%= link_to 'Remove', bookmark_path(bookmark), method: :delete, data: { confirm: 'Are you sure you want to remove this bookmark?' } %> <!-- Delete link for the bookmark -->
+      </li>
+
+
+<%= link_to 'Add Bookmark', new_list_bookmark_path(@list) %> <!-- Link to create a new bookmark -->
+<%= link_to 'Back to Lists', lists_path %> <!-- Link back to the list index page -->
