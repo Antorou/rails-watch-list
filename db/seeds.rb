@@ -1,8 +1,19 @@
+List.create(name: "First list")
 
 
-require 'faker'
-
-Movie.destroy_all
-10.times do
-  Movie.create(title: Faker::Movie.title, overview: Faker::Quote.jack_handey, poster_url: "https://image.tmdb.org/t/p/original/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg", rating: 7.5)
+require 'net/http'
+require 'json'
+# URL de l'API pour récupérer les films les mieux notés
+url = URI("https://tmdb.lewagon.com/movie/top_rated")
+# Faire la requête HTTP pour obtenir les données
+response = Net::HTTP.get(url)
+movies = JSON.parse(response)["results"]
+# Créer les films dans la base de données
+movies.each do |movie_data|
+  Movie.create(
+    title: movie_data["title"],
+    overview: movie_data["overview"],
+    poster_url: "https://image.tmdb.org/t/p/original#{movie_data['poster_path']}",
+    rating: movie_data["vote_average"]
+  )
 end
